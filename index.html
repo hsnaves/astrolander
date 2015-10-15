@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"></meta>
+    <meta name="description" content="Astrolander"></meta>
+    <title>Astrolander</title>
+    <link rel="stylesheet" href="styles.css"></link>
+    <script type="text/javascript" src="geometry.js"></script>
+    <script type="text/javascript" src="astrolander.js"></script>
+    <script type="text/javascript" src="levels.js"></script>
+    <script type="text/javascript" src="soundmanager2.js"></script>
+    <script type="text/javascript">
+      soundManager.url = './swf/';
+      // soundManager.useHTML5Audio = true;
+      soundManager.useFlashBlock = false;
+      soundManager.debugMode = false;
+      soundManager.onload = function() {
+        soundManager.createSound({
+          id: 'music',
+          url: 'music.mp3',
+          autoLoad: true,
+          loops: 1000,
+          onload: function() { this.play(); }
+        });
+        soundManager.createSound({
+          id: 'beep',
+          url: 'beep.mp3',
+          autoLoad: true
+        });
+        soundManager.createSound({
+          id: 'crash',
+          url: 'crash.mp3',
+          autoLoad: true
+        });
+        soundManager.createSound({
+          id: 'win',
+          url: 'win.mp3',
+          autoLoad: true
+        });
+      };
+      function init() {
+        var game = new Game("world", Levels);
+        game.start();
+      };
+    </script>
+  </head>
+  <body onload="init();">
+    <div>
+      <canvas id="world" width="800" height="600"></canvas>
+    </div>
+  </body>
+</html>
