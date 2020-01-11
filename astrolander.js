@@ -233,6 +233,7 @@ World.prototype.displayBonusMessage = function(angleBonus, velBonus, fuelBonus, 
     draw: function(ctx) {
       var left = 320.0, top = 250.0;
       var width = 160.0, height = 120.0;
+      var snd;
       ctx.save();
       ctx.setTransform(1.0, 0.0, 0.0, 1.0, 0.0, 0.0);
       ctx.lineWidth = 2.0;
@@ -242,8 +243,10 @@ World.prototype.displayBonusMessage = function(angleBonus, velBonus, fuelBonus, 
       ctx.strokeRect(left, top, width, height);
       ctx.fillStyle = "white";
 
-      if ((this.index % 10) == 5 && this.index > 0 && this.index < 40)
-        soundManager.play('beep');
+      if ((this.index % 10) == 5 && this.index > 0 && this.index < 40) {
+        snd = new Audio("sounds/beep.mp3");
+        snd.play();
+      }
 
       if (this.index >= 10) {
         ctx.fillText("Angle Bonus           " + angleBonus, left + 17.0, top + 30.0);
@@ -258,8 +261,10 @@ World.prototype.displayBonusMessage = function(angleBonus, velBonus, fuelBonus, 
         ctx.fillText("Time Bonus            " + timeBonus,  left + 17.0, top + 60.0);
       }
       if (this.index >= 50) {
-        if (this.index == 50)
-          soundManager.play('win');
+        if (this.index == 50) {
+          snd = new Audio("sounds/win.mp3");
+          snd.play();
+        }
         ctx.fillText("Total Bonus             " + totalBonus,  left + 17.0, top + 80.0);
         if (this.index & 2) ctx.fillStyle = "red";
         ctx.fillText("OK!",  left + 70.0, top + 100.0);        
@@ -273,6 +278,7 @@ World.prototype.displayBonusMessage = function(angleBonus, velBonus, fuelBonus, 
 
 World.prototype.update = function(up, left, right) {
   var action = 0;
+  var snd;
 
   if (this.replayMode) {
     if (this.frame >= this.replay.length) { return; }
@@ -292,7 +298,8 @@ World.prototype.update = function(up, left, right) {
     this.checkIfCrashed();
     if (this.crashed) {
       this.numLives--;
-      soundManager.play('crash');
+      snd = new Audio("sounds/crash.mp3");
+      snd.play();
       this.spaceship.explosion.reset(0);
       this.displayMessage("   Crashed !");
     }
